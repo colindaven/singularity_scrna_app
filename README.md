@@ -16,3 +16,7 @@ singularity version
 3.5.3
 
 Ubuntu 1604
+
+### Helpful links - singularity setup and SLURM
+
+https://njstem.wordpress.com/2018/08/02/r-script-seurat-with-a-singularity-container-using-slurm/
