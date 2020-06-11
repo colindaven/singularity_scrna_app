@@ -26,7 +26,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     export IN_CONTAINER=true
 
 %labels
-   AUTHOR davenport.colin@mh-hannover.de
+   AUTHOR Dr Colin Davenport
 
 %post
 
@@ -55,7 +55,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     # debootstrap will only find packages from one apt source, this is the workaround
     sed -i 's/$/ universe/' /etc/apt/sources.list
 
-    # try to speed up R package compliation
+    # try to speed up R package compliation (success, now 10-15m, was 30-45m)
     echo "options(Ncpus = 24)" > ~/.Rprofile
 
     # Install R dependecies, Python, misc. utilities
