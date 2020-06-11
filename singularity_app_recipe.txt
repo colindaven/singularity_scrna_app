@@ -16,6 +16,21 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     #!/bin/bash
     exec echo "The runscript is the containers default runtime command!"
 
+    library(shiny) 
+    library(Seurat) 
+    library(ggplot2) 
+    library(readxl)
+
+    cd /data/scrnaseq/
+    git checkout marius_changes
+
+    # Deshalb benutze ich shiny welches im script über
+    #shinyApp(ui = ui, server = server)
+    #und in der console über
+    #runApp('/data/scrnaseq/scrnaseq_app.R')
+    R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq/scrnaseq_app.R')"
+
+
 
 %files
 #   /home/rcug/testFile.txt        # copied to root of container
@@ -64,17 +79,22 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     apt -y install r-base-core libopenblas-dev python3-pip  
     apt clean
 
-    # fast load R packages (if they exist!). Problematic
-#    R -e 'ip <- readRDS("/working2/tmp/colin/CurrentPackages.rds"); install.packages(ip[, 1])'
-
 
     # Install required R packages
     R --slave -e 'install.packages(c("shiny", "Seurat"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("ggplot2", "readxl"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("golem"), repos="https://cloud.r-project.org/")'
 
-
     mkdir /data
+    cd /data
+    
+    # Get current actual app to run:
+    #wget https://raw.githubusercontent.com/mariusrueve/scrnaseq/marius_changes/scrnaseq_app.R
+    git clone https://github.com/mariusrueve/scrnaseq
+    cd scrnaseq/
+    git checkout marius_changes
+
+
 
     # Alternatives - Electron app - used by cerebro.
     # An even more appropriate system might be shinyproxy. 
@@ -103,5 +123,3 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 #    chown shiny:shiny /var/log/shiny-server
 
 
-    # Save R packages (I did this manually which worked, it did not in container build process)
-#    R -e 'ip <- installed.packages(); saveRDS(ip, "/working2/tmp/colin/CurrentPackages.rds")'
