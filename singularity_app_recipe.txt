@@ -1,10 +1,13 @@
 # Singularity: R_app_recipe.txt. Test/work in progress! 
+# Intended to download and run the R Shiny code from https://github.com/mariusrueve/scrnaseq in a singularity container based on Ubuntu 20.04
 # Colin Davenport, June 2020
+#
+#
 # 1. Make sure your proxy settings are set up in your environment eg in .bashrc file as below
 #HTTPS_proxy=http://proxy.mycompany.de:8080
 #http_proxy=proxy.mycompany.de:8080
 #GOPROXY=proxy.mycompany.de:8080
-
+#
 # 2. Run the build: sudo singularity build ../scrnaseq_app.simg singularity_app_recipe.txt
 
 Bootstrap: debootstrap
@@ -14,7 +17,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 
 %runscript
     #!/bin/bash
-    exec echo "The runscript is the containers default runtime command!"
+    #exec echo "The runscript is the containers default runtime command"
 
     library(shiny) 
     library(Seurat) 
@@ -23,18 +26,13 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 
     cd /data/scrnaseq/
     git checkout marius_changes
-
-    # Deshalb benutze ich shiny welches im script über
-    #shinyApp(ui = ui, server = server)
-    #und in der console über
-    #runApp('/data/scrnaseq/scrnaseq_app.R')
+    
+    # Run container in R Shiny
     R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq/scrnaseq_app.R')"
 
 
 
 %files
-#   /home/rcug/testFile.txt        # copied to root of container
-#   /home/rcug/testFile.txt     /opt/testFile.txt #
 #   /home/rcug/testFile.txt     /data/testFile.txt #
 
 %environment
@@ -45,7 +43,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 
 %post
 
-    echo "The post section is where you can install, and configure your container."
+    #echo "The post section is where you can install, and configure your container."
 
 
     # In order to get locales working properly inside a Singularity container
@@ -95,6 +93,14 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     git checkout marius_changes
 
 
+    # download required example file
+    wget https://owncloud.gwdg.de/index.php/s/rRawkhIOVe1T5qi/download
+    mv download pbmc_2020-06-08.rds
+
+
+    #############
+    # The following are all just unused alternatives and comments
+    ############
 
     # Alternatives - Electron app - used by cerebro.
     # An even more appropriate system might be shinyproxy. 
