@@ -4,9 +4,10 @@ A test environment for scrna_seq_apps
 
 
 ## How to build using Singularity: build process command:
+```
 ### takes ~10 minutes (uses up to 24 cores on a multicore machine!)
 sudo singularity build ../scrnaseq_app.simg singularity_app_recipe.txt
-
+```
 
 ## Run app - exits without msg
 ```
