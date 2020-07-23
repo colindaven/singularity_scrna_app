@@ -1,6 +1,6 @@
 # Singularity: R_app_recipe.txt. Test/work in progress! 
 # Intended to download and run the R Shiny code from https://github.com/mariusrueve/scrnaseq in a singularity container based on Ubuntu 20.04
-# Colin Davenport, June 2020
+# Colin Davenport, June 2020 - July 2020
 #
 #
 # 1. Make sure your proxy settings are set up in your environment eg in .bashrc file as below
@@ -17,15 +17,16 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 
 %runscript
     #!/bin/bash
-    #exec echo "The runscript is the containers default runtime command"
+    exec echo "Container version 0.1 July 2020"
 
     library(shiny) 
     library(Seurat) 
     library(ggplot2) 
     library(readxl)
 
-    cd /data/scrnaseq/
-    git checkout marius_changes
+    cd /data/scrnaseq_app/
+    # only if some branch is used, not master branch
+    #git checkout marius_changes
     
     # Run container in R Shiny
     R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq/scrnaseq_app.R')"
@@ -88,14 +89,21 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     
     # Get current actual app to run:
     #wget https://raw.githubusercontent.com/mariusrueve/scrnaseq/marius_changes/scrnaseq_app.R
-    git clone https://github.com/mariusrueve/scrnaseq
-    cd scrnaseq/
-    git checkout marius_changes
+    #git clone https://github.com/mariusrueve/scrnaseq
+    git clone https://github.com/MHH-RCUG/scrnaseq_app
+    cd scrnaseq_app/
+    #git checkout marius_changes
 
 
     # download required example file
     wget https://owncloud.gwdg.de/index.php/s/rRawkhIOVe1T5qi/download
     mv download pbmc_2020-06-08.rds
+
+
+
+
+
+
 
 
     #############
