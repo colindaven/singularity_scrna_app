@@ -29,7 +29,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     #git checkout marius_changes
     
     # Run container in R Shiny
-    R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq/scrnaseq_app.R')"
+    R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq_app/scrnaseq_app.R')"
 
 
 
@@ -88,8 +88,6 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     cd /data
     
     # Get current actual app to run:
-    #wget https://raw.githubusercontent.com/mariusrueve/scrnaseq/marius_changes/scrnaseq_app.R
-    #git clone https://github.com/mariusrueve/scrnaseq
     git clone https://github.com/MHH-RCUG/scrnaseq_app
     cd scrnaseq_app/
     #git checkout marius_changes

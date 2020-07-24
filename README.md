@@ -1,5 +1,6 @@
 # singularity_scrna_app
-A test environment for scrna_seq_apps
+A test environment for the R Shiny scrnaseq app by Marius Rueve
+Singularity app by Colin Davenport
 
 
 
@@ -18,9 +19,9 @@ singularity exec ../scrnaseq_app.simg ls  /data/scrnaseq/
 singularity shell ../scrnaseq_app.simg 
 ```
 
-### Actual app to run:
+### Actual app and repo to run:
 ```
-wget https://raw.githubusercontent.com/mariusrueve/scrnaseq/marius_changes/scrnaseq_app.R
+https://github.com/MHH-RCUG/scrnaseq_app
 ```
 
 ### Test app in container. Currently missing pbmc_2020-06-08.rds', probable reason 'No such file or directory'
@@ -44,6 +45,6 @@ https://njstem.wordpress.com/2018/08/02/r-script-seurat-with-a-singularity-conta
 
 ### Dependencies : downloaded in script
 ```
-git clone (marius dev repo)
+git clone https://github.com/MHH-RCUG/scrnaseq_app
 wget https://owncloud.gwdg.de/index.php/s/rRawkhIOVe1T5qi/download
 ```
