@@ -34,7 +34,7 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
 
 
 %files
-#   /home/rcug/testFile.txt     /data/testFile.txt #
+     /mnt/ngsnfs/tools/rstudio/rstudio_cran_gpg.key    /data/rstudio_cran_gpg.key
 
 %environment
     export IN_CONTAINER=true
@@ -69,11 +69,18 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     # debootstrap will only find packages from one apt source, this is the workaround
     sed -i 's/$/ universe/' /etc/apt/sources.list
 
+    # Get current R, eg R4.0
+    apt install -y gnupg ca-certificates
+    apt-key add /data/rstudio_cran_gpg.key
+    echo "deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" > /etc/apt/sources.list.d/cloud_r_project_org_bin_linux_ubuntu.list
+
+
     # try to speed up R package compliation (success, now 10-15m, was 30-45m)
     echo "options(Ncpus = 24)" > ~/.Rprofile
 
-    # Install R dependecies, Python, misc. utilities
-    apt update && apt -y install python3 build-essential libcurl4-openssl-dev openssh-client openssh-server libssh-dev wget vim git nano cmake 
+    # Install R dependencies, Python, misc. utilities
+    apt update
+    apt -y install python3 build-essential libcurl4-openssl-dev openssh-client openssh-server libssh-dev wget vim git nano cmake 
     apt -y install gfortran g++ curl python3 autoconf bzip2 libtool libtool-bin python3-dev libxml2-dev
     apt -y install r-base-core libopenblas-dev python3-pip  
     apt clean
@@ -83,8 +90,11 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     R --slave -e 'install.packages(c("shiny", "Seurat"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("ggplot2", "readxl"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("golem"), repos="https://cloud.r-project.org/")'
+    R --slave -e 'install.packages(c("shinythemes"), repos="https://cloud.r-project.org/")'
+    R --slave -e 'install.packages(c("markdown"), repos="https://cloud.r-project.org/")'
 
-    mkdir /data
+
+    #mkdir /data
     cd /data
     
     # Get current actual app to run:

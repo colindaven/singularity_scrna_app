@@ -26,7 +26,7 @@ https://github.com/MHH-RCUG/scrnaseq_app
 
 ### Test app in container. Currently missing pbmc_2020-06-08.rds', probable reason 'No such file or directory'
 ```
-singularity exec ../scrnaseq_app.simg     R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq/scrnaseq_app.R')"
+singularity exec ../scrnaseq_app.simg     R -e "options('shiny.port'=3838,shiny.host='0.0.0.0'); shiny::runApp('/data/scrnaseq_app/scrnaseq_app.R')"
 ```
 
 
