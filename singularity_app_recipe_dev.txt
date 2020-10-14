@@ -19,10 +19,15 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     #!/bin/bash
     exec echo "Container version 0.1 dev August 2020"
 
-    library(shiny) 
-    library(Seurat) 
-    library(ggplot2) 
-    library(readxl)
+    library(shiny)
+	library(Seurat)
+	library(ggplot2)
+	library(shinythemes)
+	library(markdown)
+	library(readxl)
+	library(shinyalert)
+	library(shinyjs)
+	library(zip)
 
     cd /data/scrnaseq_app/
     # only if some branch is used, not master branch
@@ -93,8 +98,8 @@ MirrorURL: http://de.archive.ubuntu.com/ubuntu/
     R --slave -e 'install.packages(c("golem"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("shinythemes"), repos="https://cloud.r-project.org/")'
     R --slave -e 'install.packages(c("markdown"), repos="https://cloud.r-project.org/")'
-
-
+    R --slave -e 'install.packages(c("shinyalert", "shinyjs","zip"), repos="https://cloud.r-project.org/")'
+ 
     #mkdir /data
     cd /data
     
